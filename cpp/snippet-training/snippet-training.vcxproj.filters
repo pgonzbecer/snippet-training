@@ -27,5 +27,8 @@
     <ClCompile Include="Factorials.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ListRemoveDuplication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

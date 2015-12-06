@@ -19,6 +19,7 @@ double factorial(int n)
 	return (double)n*factorial(n-1);
 }
 
+/*
 // The start of the app for the factorial
 void main()
 {
@@ -40,6 +41,6 @@ void main()
 			cout<< "Factorial is too large\n";
 		}
 	}
-}
+}*/
 
 // End of File

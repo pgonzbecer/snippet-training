@@ -66,6 +66,7 @@
     <ClCompile Include="Exec.cpp" />
     <ClCompile Include="Factorials.cpp" />
     <ClCompile Include="HashTable.cpp" />
+    <ClCompile Include="ListRemoveDuplication.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
