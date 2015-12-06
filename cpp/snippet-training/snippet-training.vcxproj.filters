@@ -24,5 +24,8 @@
     <ClCompile Include="Exec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Factorials.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

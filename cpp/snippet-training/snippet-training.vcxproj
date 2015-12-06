@@ -64,6 +64,7 @@
   <ItemGroup>
     <ClCompile Include="BinaryTree.cpp" />
     <ClCompile Include="Exec.cpp" />
+    <ClCompile Include="Factorials.cpp" />
     <ClCompile Include="HashTable.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

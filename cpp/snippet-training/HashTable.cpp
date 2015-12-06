@@ -103,6 +103,8 @@ class HashTable
 			table[hash]=	new HashEntry(key, value);
 		}
 };
+
+/*
 // Main for the HashTable
 void main()
 {
@@ -130,6 +132,6 @@ void main()
 		if(bValMatch)
 			cout<< "Key: "<< items[0]<< ", Val: "<< table.get(items[0])<< "\n";
 	}while(bValMatch);
-}
+}*/
 
 // End of File

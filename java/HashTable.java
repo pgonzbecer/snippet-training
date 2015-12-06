@@ -25,6 +25,7 @@ public class HashTable<T>
 	
 	// Static Methods
 	
+	// Starts up the application
 	public static void main(String[] args)
 	{
 		// Variables
