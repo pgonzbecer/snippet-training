@@ -10,7 +10,7 @@ I will try to cover all these topics in 4 languages, C#, C++, and Java. If I hav
   - Quick search with sorted version
 - Permutation of strings
 - A thing that checks if you won Sudoku
-- Graphs: It's almost the same, but I have done some shortest path stuff [here](https://github.com/pgonzbecer/Conquest), with the source being [here, it's near the bottom](https://github.com/pgonzbecer/Conquest/blob/master/src/Conquest/Maps/HexGrid.cs) it's Lee algorithm though.
+- Graphs: It's almost the same, but I have done some shortest path stuff [here](https://github.com/pgonzbecer/Conquest), with the source being [here, it's near the bottom](https://github.com/pgonzbecer/Conquest/blob/master/src/Conquest/Maps/HexGrid.cs). It's [Lee algorithm](https://en.wikipedia.org/wiki/Lee_algorithm) though.
   - A*
   - Dijkstra
 - AVL Tree
