@@ -19,7 +19,7 @@ public class Dummy
 		
 		while(true)
 		{
-			Console.Write("--- Type any non-number to exit ---\nType in a number to find within the hash table\n> ");
+			Console.Write("--- Type any non-number to exit, Type \"display\" to display the entire hash table ---\nType in a number to find within the hash table\n> ");
 			line=	Console.ReadLine();
 			if(line.ToLower()== "display")
 			{
