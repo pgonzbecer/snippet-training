@@ -1,8 +1,6 @@
 # Snippet Training
 
-Pumped pumped pumped
-
-... All hype asside, I will cover all these topics in 4 languages, C#, C++, Java, and JavaScript. Maybe scratch the last one? Idk, but I must be prepared for EVERYTHING! I am using Cloud9 to easily compile and run. I will be doing the following:
+I will try to cover all these topics in 4 languages, C#, C++, and Java. If I have completed it, there should be a link to the executable, respective to the language. I will be doing the following:
 
 - Binary Tree
 - HashTable
