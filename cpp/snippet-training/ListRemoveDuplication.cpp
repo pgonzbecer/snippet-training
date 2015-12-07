@@ -49,6 +49,7 @@ void removeAllDuplicates()
 	}
 }
 
+/*
 // Starts the app
 void main(int argc, char * args[])
 {
@@ -72,6 +73,6 @@ void main(int argc, char * args[])
 		else
 			cout<< items[i]<< ", ";
 	}
-}
+}*/
 
 // End of File

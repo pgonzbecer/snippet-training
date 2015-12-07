@@ -21,13 +21,13 @@
     <ClCompile Include="HashTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Exec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Factorials.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ListRemoveDuplication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sorting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

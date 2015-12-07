@@ -1,7 +1,8 @@
 // Created by Paul Gonzalez Becerra
 
 #include<iostream>
-#include<time.h>
+#include<stdio.h>
+#include<ctime>
 
 using namespace std;
 
@@ -10,119 +11,270 @@ const int TABLE_SIZE=	128;
 
 // Classes
 
-class HashEntry
+template<class T>
+class LinkedNode
 {
 	private:
-		// Variables
-		int	key;
-		int	value;
-	public:
-		// Constructors
-		HashEntry(int pmKey, int pmValue)
+		// Gets the index of the given value within the linked nodes
+		int getIndexOf(T value, int id)
 		{
-			key=	pmKey;
-			value=	pmValue;
+			if(value== val)
+				return id;
+			if(nextNode== (LinkedNode<T>*)0);
+				return -1;
+
+			return nextNode->getIndexOf(value, id+1);
+		}
+
+		// Gets the last index of the linked nodes
+		int getLastIndex(int id)
+		{
+			if(nextNode== (LinkedNode<T>*)0)
+				return id;
+
+			return nextNode->getLastIndex(id+1);
+		}
+	public:
+		// Variables
+		T	val;
+		LinkedNode<T>*	nextNode;
+
+		// Constructors
+
+		LinkedNode(T value)
+		{
+			val=	value;
+			nextNode=	(LinkedNode<T>*)0;
+		}
+
+		// Methods
+		
+		// Inserts the given value to the very back of the linked list
+		void insertToBack(T value)
+		{
+			if(value== val)
+				return;
+			if(nextNode== (LinkedNode<T>*)0)
+				nextNode=	new LinkedNode<T>(value);
+			else
+				nextNode->insertToBack(value);
+		}
+
+		// Gets the index of the given value
+		int getIndexOf(T value)	{	return getIndexOf(value, 0);	}
+
+		// Gets the last index of the linked list
+		int getLastIndex()	{	return getLastIndex(1);	}
+
+		// Gets the value from the given index within the linked nodes
+		T getFromIndex(int index)
+		{
+			if(index== 0)
+				return val;
+			if(nextNode== (LinkedNode<T>*)0)
+				return (T)0;
+
+			return nextNode->getFromIndex(index-1);
+		}
+
+		// Removes the value from the given index within the linked nodes
+		bool removeFromIndex(int index)
+		{
+			if(index-1== 0 && nextNode!= (LinkedNode<T>*)0)
+			{
+				nextNode=	nextNode->nextNode;
+
+				return true;
+			}
+			if(nextNode== (LinkedNode<T>*)0)
+				return false;
+
+			return nextNode->removeFromIndex(index-1);
+		}
+};
+
+template<class T>
+class LinkedList
+{
+	public:
+		// Variables
+		LinkedNode<T>*	root;
+
+		// Constructors
+
+		LinkedList(T value)
+		{
+			root=	new LinkedNode<T>(value);
+		}
+};
+
+class HashEntry
+{
+	public:
+		// Variables
+		LinkedList<int>*	key;
+		LinkedList<char>*	val;
+
+		// Constructors
+
+		HashEntry(int pmKey, char pmVal)
+		{
+			key=	new LinkedList<int>(pmKey);
+			val=	new LinkedList<char>(pmVal);
 		}
 
 		// Methods
 
-		// Gets the key of the hash entry
-		int	getKey()
+		// Adds the given key and value to the bucket list
+		void addToBucket(int pmKey, char pmVal)
 		{
-			return key;
+			key->root->insertToBack(pmKey);
+			val->root->insertToBack(pmVal);
 		}
 
-		// Gets the value of the hash entry
-		int getValue()
+		// Gets the value from the bucket using the given key
+		char getFromBucket(int pmKey)
 		{
-			return value;
+			// Variables
+			int	index=	key->root->getIndexOf(pmKey);
+
+			if(index== -1)
+				return (char)0;
+
+			return val->root->getFromIndex(index);
+		}
+
+		// Removes the value and key from the given key out of the bucket
+		bool removeFromBucket(int pmKey)
+		{
+			// Variables
+			int	index=	key->root->getFromIndex(pmKey);
+
+			if(index== -1)
+				return false;
+			
+			key->root->removeFromIndex(index);
+			val->root->removeFromIndex(index);
+
+			return true;
+		}
+
+		// Displays the bucket from the entry
+		void display()
+		{
+			// Variables
+			int	full=	key->root->getLastIndex();
+
+			for(int i= 0; i< full; i++)
+				cout<< "Key: "<< key->root->getFromIndex(i)<< "; Val: "<< val->root->getFromIndex(i)<< ";\n";
 		}
 };
 
 class HashTable
 {
 	private:
+		int getHash(int key)
+		{
+			return key%size;
+		}
+	public:
 		// Variables
 		HashEntry	**table;
 		int	size;
-	public:
+
 		// Constructors
-		HashTable()
-		{
-			table=	new HashEntry*[TABLE_SIZE];
-			size=	TABLE_SIZE;
-		}
+
 		HashTable(int pmSize)
 		{
 			table=	new HashEntry*[pmSize];
 			size=	pmSize;
-		}
-		~HashTable()
-		{
 			for(int i= 0; i< size; i++)
-			{
-				if(table[i]!= nullptr)
-					delete table[i];
-
-				delete[] table;
-			}
+				table[i]=	new HashEntry((size+rand())%size, (rand()%27)+65);
 		}
+		HashTable()	{	HashTable(256);	}
 
 		// Methods
 
-		// Gets the value of the given key
-		int get(int key)
+		// Inserts the given key and value into the hashtable
+		void insert(int key, char val)
 		{
 			// Variables
-			int	hash=	key%size;
+			int	hash=	getHash(key);
 
-			while(table[hash]!= nullptr && (*table[hash]).getKey()!=key)
-			{
-				hash=	(hash+1)%size;
-			}
-			if(table[hash]== nullptr)
-				return -1;
+			if(table[hash]== (HashEntry*)0)
+				table[hash]=	new HashEntry(key, val);
 			else
-				return (*table[hash]).getValue();
+				table[hash]->addToBucket(key, val);
 		}
 
-		// Adds the given key and value pair into the hash table
-		void add(int key, int value)
+		// Clears out the entire hashtable
+		void clear()
+		{
+			table=	new HashEntry*[size];
+		}
+
+		// Gets the value of the given key
+		char get(int key)
+		{
+			//  Variables
+			int	hash=	getHash(key);
+
+			if(table[hash]== (HashEntry*)0)
+				return (char)0;
+			else
+				return table[hash]->getFromBucket(key);
+		}
+
+		// Removes the value and key with the given key
+		bool remove(int key)
 		{
 			// Variables
-			int	hash=	key%size;
-			
-			if(table[hash]== nullptr)
-				cout<< "YES";
-			while(table[hash]!= nullptr && (*table[hash]).getKey()!= key)
+			int	hash=	getHash(key);
+
+			if(table[hash]== (HashEntry*)0)
+				return false;
+			else
+				return table[hash]->removeFromBucket(key);
+		}
+
+		// Displays the hash table
+		void display()
+		{
+			for(int i= 0; i< size; i++)
 			{
-				hash=	(hash+1)%size;
+				if(table[i]== (HashEntry*)0)
+					cout<< "Entry "<< i<< ": NULL\n";
+				else
+				{
+					cout<< "Entry "<< i<< ":\n";
+					table[i]->display();
+				}
 			}
-			if(table[hash]!= nullptr)
-				delete table[hash];
-			table[hash]=	new HashEntry(key, value);
 		}
 };
 
 /*
-// Main for the HashTable
+// Starts the app
 void main()
 {
 	// Variables
-	int	tsize=	200;
+	int	tsize=	50;
 	int	items[2];
 	bool	bValMatch;
-	HashTable	table=	HashTable(tsize);
+	HashTable	table;
 
 	srand(time(0));
 
-	for(int i= 0; i< tsize; i++)
+	table=	HashTable(tsize);
+
+	for(int i= 0; i< tsize*3; i++)
 	{
-		items[0]=	(i+rand())%tsize;
-		items[1]=	(rand())%tsize;
-		cout<< "Key: "<< items[0]<< "; Val: "<< items[1]<< "\n";
-		table.add(items[0], items[1]);
+		items[0]=	(tsize+i+rand())%tsize;
+		items[1]=	(rand()%27)+65;
+		table.insert(items[0], (char)(items[1]));
 	}
+	
+	table.display();
 
 	do
 	{
@@ -130,7 +282,7 @@ void main()
 		bValMatch=	(cin>> items[0]);
 
 		if(bValMatch)
-			cout<< "Key: "<< items[0]<< ", Val: "<< table.get(items[0])<< "\n";
+			cout<< "Key: "<< items[0]<< ", Val: "<< table.get(items[0])<< ";\n";
 	}while(bValMatch);
 }*/
 

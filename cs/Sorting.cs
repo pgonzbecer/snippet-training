@@ -82,15 +82,9 @@ public class Sorting
 		for(int i= begin; i< end; i++)
 		{ 
 			if(h< middle && (k>= end || items[h]<= items[k]))
-			{
-				temp[i]=	items[h];
-				h++;
-			}
+				temp[i]=	items[h++];
 			else
-			{
-				temp[i]=	items[k];
-				k++;
-			}
+				temp[i]=	items[k++];
 		}
 	}
 	

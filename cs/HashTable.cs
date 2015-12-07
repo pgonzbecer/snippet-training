@@ -106,7 +106,7 @@ public class LinkedNode<T>
 		return nextNode.getFromIndex(index-1);
 	}
 	
-	// Removes the value and key from the given index within the linked nodes
+	// Removes the value from the given index within the linked nodes
 	public bool removeFromIndex(int index)
 	{
 		if(index-1== 0 && nextNode!= null)
@@ -237,7 +237,7 @@ public class HashTable
 		int	hash=	getHash(key);
 		
 		if(table[hash]== null) // Nothing is found
-			return true;
+			return false;
 		else
 			return table[hash].removeFromBucket(key);
 	}

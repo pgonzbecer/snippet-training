@@ -2,96 +2,124 @@
 
 #include<iostream>
 #include<stdio.h>
+#include<ctime>
 
 #define SIZE(a)	(sizeof(a)/sizeof(*a));
 
 using namespace std;
 
-struct Node
+class Node
 {
-	int	id;
-	Node*	left;
-	Node*	right;
+	public:
+		// Variables
+		int	id;
+		Node*	left;
+		Node*	right;
 
-	Node(int n)	{
-		id=	n;
-		left=	nullptr;
-		right=	nullptr;
-	}
+		// Constructors
+
+		Node(int n)
+		{
+			id=	n;
+			left=	(Node*)0;
+			right=	(Node*)0;
+		}
+
+		// Methods
+
+		// Inserts the given key into the nodes
+		void insert(int key)
+		{
+			if(key== id) // No duplicates
+				return;
+			if(key< id)
+			{
+				if(left== (Node*)0)
+					left=	new Node(key);
+				else
+					(*left).insert(key);
+			}
+			else
+			{
+				if(right== (Node*)0)
+					right=	new Node(key);
+				else
+					(*right).insert(key);
+			}
+		}
+
+		// Displays the node
+		void display(int index, char type)
+		{
+			for(int i= 0; i< index; i++)
+				cout<< "  |";
+			cout<< "+"<< id<< "  :  ";
+			switch(type)
+			{
+				case 0:	cout<< "ROOT\n";	break;
+				case 1:	cout<< "RIGHT\n";	break;
+				case 2:	cout<< "LEFT\n";	break;
+			}
+
+			if(left!= (Node*)0)
+				(*left).display(index+1, 2);
+			if(right!= (Node*)0)
+				(*right).display(index+1, 1);
+		}
 };
 
 class BinaryTree
 {
 	public:
-		Node*	start;
+		Node*	root;
 
 		// Constructors
 
 		BinaryTree()
 		{
-			start=	new Node(0);
+			root=	(Node*)0;
 		}
 
 		// Methods
-		void insert(int n, int a[], int asize)
+
+		// Populates the tree with the given array
+		void populateTree(int a[], int asize)
 		{
-			while(n< asize)	{
-				insertIntoNode(a[n], start);
-				n++;
-			};
-		}
-
-		void insertIntoNode(int n, Node *node)
-		{
-			if(node== nullptr)
+			for(int i= 0; i< asize; i++)
 			{
-				node=	new Node(n);
-				(*node).id=	n;
-				(*node).left=	nullptr;
-				(*node).right=	nullptr;
-				cout<< node<< "\n";
-
-				return;
-			}
-
-			if(n< (*node).id) // Go Left
-			{
-				insertIntoNode(n, (*node).left);
-
-				return;
-			}
-			else if(n== (*node).id) // Duplicate
-			{
-				(*node).id=	n;
-				return;
-			}
-			else // Go Right
-			{
-				insertIntoNode(n, (*node).right);
-				return;
+				if(root== (Node*)0)
+					root=	new Node(a[i]);
+				else
+					(*root).insert(a[i]);
 			}
 		}
 
-		int search(int key)
+		// Displays the tree
+		void displayTree()
 		{
-			return searchFromNode(key, start);
-		}
-		int searchFromNode(int key, Node *node)
-		{
-			if(node== nullptr)
-				return -1;
-			if(key< (*node).id) // Go Left
-			{
-				return searchFromNode(key, (*node).left);
-			}
-			else if(key== (*node).id) // Found it!
-				return key;
-			else // Go right
-			{
-				return searchFromNode(key, (*node).right);
-			}
-			
+			if(root== (Node*)0)
+				cout<< "--- Tree is empty ---";
+			else
+				(*root).display(0, 0);
 		}
 };
+
+/*
+// Starts up the app
+void main()
+{
+	// Variables
+	BinaryTree	tree=	BinaryTree();
+	int	asize=	20;
+	int	a[20];
+
+	srand(time(0));
+
+	for(int i= 0; i< asize; i++)
+		a[i]=	i+(rand()%132);
+
+	tree.populateTree(a, asize);
+	tree.displayTree();
+}*/
 
 // End of File
